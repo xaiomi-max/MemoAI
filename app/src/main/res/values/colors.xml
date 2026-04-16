@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="memo_primary">#2563EB</color>
+    <color name="memo_bg">#F8FAFC</color>
+    <color name="memo_topbar_bg">#E0F2FE</color>
+</resources>

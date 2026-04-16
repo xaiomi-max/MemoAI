@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.memoai.app-mergeDebugResources-49:/values-v30/values-v30.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\1\\.gradle\\caches\\8.13\\transforms\\c5d1fff2cedf3f8bdc085c6f34a1747d\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "72",
+                        "endOffsets": "123"
+                    }
+                }
+            ]
+        }
+    ]
+}

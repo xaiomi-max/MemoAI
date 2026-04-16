@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="memo_bg">#F8FAFC</color>
+    <color name="memo_primary">#2563EB</color>
+    <color name="memo_topbar_bg">#E0F2FE</color>
+    <string name="app_name">Memo</string>
+    <style name="Theme.MemoAI" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/memo_topbar_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+    </style>
+</resources>
