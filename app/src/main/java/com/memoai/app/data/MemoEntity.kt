@@ -11,5 +11,11 @@ data class MemoEntity(
     val userInput: String,
     val content: String,
     val highlights: String,
-    val timestamp: String
+    val timestamp: String,
+    val remindAtMillis: Long? = null,
+    val timeText: String? = null,
+    val completed: Boolean = false,
+    val cloudProcessed: Boolean = false,
+    val createdAtMillis: Long = 0L,
+    val completedAtMillis: Long? = null
 )

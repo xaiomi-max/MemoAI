@@ -1,8 +1,29 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
 }
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(FileInputStream(localPropertiesFile))
+}
+val deepseekApiKey = (localProperties.getProperty("DEEPSEEK_API_KEY") ?: "")
+    .replace("\\", "\\\\")
+    .replace("\"", "\\\"")
+val iflytekAppId = (localProperties.getProperty("IFLYTEK_APP_ID") ?: "3d0f8f93")
+    .replace("\\", "\\\\")
+    .replace("\"", "\\\"")
+val iflytekApiKey = (localProperties.getProperty("IFLYTEK_API_KEY") ?: "")
+    .replace("\\", "\\\\")
+    .replace("\"", "\\\"")
+val iflytekApiSecret = (localProperties.getProperty("IFLYTEK_API_SECRET") ?: "")
+    .replace("\\", "\\\\")
+    .replace("\"", "\\\"")
 
 android {
     namespace = "com.memoai.app"
@@ -14,7 +35,41 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        // 当前为 vivo 应用商店版本；后续可按 flavor 覆盖，见下方 productFlavors 模板
+        buildConfigField("String", "DISTRIBUTION_CHANNEL", "\"vivo\"")
+        buildConfigField("String", "DEEPSEEK_API_KEY", "\"$deepseekApiKey\"")
+        buildConfigField("String", "IFLYTEK_APP_ID", "\"$iflytekAppId\"")
+        buildConfigField("String", "IFLYTEK_API_KEY", "\"$iflytekApiKey\"")
+        buildConfigField("String", "IFLYTEK_API_SECRET", "\"$iflytekApiSecret\"")
     }
+
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDirs("src/main/jniLibs", "libs")
+        }
+    }
+
+    // 后续按应用商店分包示例（取消注释并为各渠道单独 assembleRelease）：
+    // flavorDimensions += "store"
+    // productFlavors {
+    //     create("vivo") {
+    //         dimension = "store"
+    //         buildConfigField("String", "DISTRIBUTION_CHANNEL", "\"vivo\"")
+    //     }
+    //     create("xiaomi") {
+    //         dimension = "store"
+    //         buildConfigField("String", "DISTRIBUTION_CHANNEL", "\"xiaomi\"")
+    //         // 同时在 OemAutostartRouter.routes 中启用 XiaomiAutostartRoute
+    //     }
+    //     create("huawei") {
+    //         dimension = "store"
+    //         buildConfigField("String", "DISTRIBUTION_CHANNEL", "\"huawei\"")
+    //     }
+    //     create("oppo") {
+    //         dimension = "store"
+    //         buildConfigField("String", "DISTRIBUTION_CHANNEL", "\"oppo\"")
+    //     }
+    // }
 
     buildTypes {
         release {
@@ -32,6 +87,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     composeOptions {
@@ -40,6 +96,9 @@ android {
 }
 
 dependencies {
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(files("libs/SparkChain.aar"))
+    implementation(files("libs/Codec.aar"))
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
     implementation("androidx.activity:activity-compose:1.9.2")
